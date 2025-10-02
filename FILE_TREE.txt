@@ -1,0 +1,250 @@
+Portfolio Website - Complete File Tree
+========================================
+
+bvswe/
+│
+├── public/
+│   ├── favicon.svg                    # Brand favicon (purple "P")
+│   └── screens/
+│       ├── screen1.jpg                # Placeholder: Dashboard screenshot
+│       ├── screen2.jpg                # Placeholder: Analytics screenshot
+│       ├── screen3.jpg                # Placeholder: eCommerce screenshot
+│       └── screen4.jpg                # Placeholder: Automation screenshot
+│
+├── src/
+│   ├── components/
+│   │   ├── Navbar.vue                 # Sticky nav with animated status ring
+│   │   ├── Hero.vue                   # Hero section with CTAs and iPad showcase
+│   │   ├── IPadShowcase.vue           # Animated iPad with scroll loop (reusable)
+│   │   ├── ProvenSection.vue          # "Proven in the Field" stats section
+│   │   ├── StatCard.vue               # Reusable stat card component
+│   │   ├── Gallery.vue                # Live gallery with auto-switching tiles
+│   │   ├── GalleryTile.vue            # Individual gallery tile (auto-swap images)
+│   │   ├── ServicesProcess.vue        # Services & Process two-column section
+│   │   ├── StackGuarantees.vue        # Tech stack & guarantees section
+│   │   ├── Footer.vue                 # Footer with sitemap and social links
+│   │   └── ContactModal.vue           # Contact form modal (mailto)
+│   │
+│   ├── App.vue                        # Main app component
+│   ├── main.js                        # App entry point
+│   └── style.css                      # Tailwind imports + custom utilities
+│
+├── .gitignore                         # Git ignore rules
+├── index.html                         # HTML entry with SEO meta tags
+├── package.json                       # Dependencies and scripts
+├── postcss.config.js                  # PostCSS configuration
+├── tailwind.config.js                 # Tailwind configuration with brand colors
+├── vite.config.js                     # Vite build configuration
+├── README.md                          # Complete setup and customization guide
+└── FILE_TREE.txt                      # This file
+
+
+Component Hierarchy
+===================
+
+App.vue
+  ├── Navbar.vue
+  ├── Hero.vue
+  │   └── IPadShowcase.vue (reusable)
+  ├── ProvenSection.vue
+  │   └── StatCard.vue (×4)
+  ├── Gallery.vue
+  │   └── GalleryTile.vue (×6)
+  ├── ServicesProcess.vue
+  ├── StackGuarantees.vue
+  ├── Footer.vue
+  └── ContactModal.vue (Teleport)
+
+
+Key Features by Component
+==========================
+
+Navbar.vue:
+  - Sticky, translucent backdrop
+  - Responsive hamburger menu
+  - Animated green "online" status ring
+  - CTA button + navigation links
+
+Hero.vue:
+  - Large purple background
+  - Bold headline + subtext
+  - Two CTAs (Hire Me + Book Call)
+  - Trust badges row
+  - iPad showcase on right
+
+IPadShowcase.vue:
+  - Slide-in animation on mount
+  - Continuous scroll loop (idle → scroll → idle)
+  - Cross-fading images
+  - Respects prefers-reduced-motion
+  - Fully prop-driven & reusable
+
+ProvenSection.vue:
+  - Anonymized case results
+  - Grid of StatCard components
+  - Disclaimer text
+
+StatCard.vue:
+  - Stat display with icon
+  - Hover shadow effect
+  - Fully reusable
+
+Gallery.vue:
+  - Responsive grid (1→2→3 columns)
+  - 6 project tiles
+  - Each tile auto-swaps 3× then freezes
+
+GalleryTile.vue:
+  - Auto-swap images every 3s
+  - Stops after 3 swaps
+  - Hover overlay with title + arrow
+  - Opens URL in new tab
+  - Respects prefers-reduced-motion
+
+ServicesProcess.vue:
+  - Two-column layout
+  - "What I Do" list with checkmarks
+  - "How I Work" timeline with step numbers
+  - CTA button
+
+StackGuarantees.vue:
+  - Tech stack grid (8 items)
+  - Guarantees grid (4 items)
+  - CTA button
+
+Footer.vue:
+  - 4-column layout (brand, nav, contact, social)
+  - Social icons (Twitter, GitHub, LinkedIn)
+  - Copyright + legal links
+
+ContactModal.vue:
+  - Teleported modal overlay
+  - Contact form (name, email, message)
+  - Opens mailto: link on submit
+  - Smooth transitions
+  - Form reset on close
+
+
+Customization Checklist
+========================
+
+[ ] Replace public/screens/*.jpg with real screenshots
+[ ] Update ContactModal.vue mailto: email address
+[ ] Update Gallery.vue project URLs and images
+[ ] Replace Navbar.vue avatar placeholder with real image
+[ ] Update tailwind.config.js brand colors
+[ ] Update Footer.vue contact info (email, phone)
+[ ] Update Footer.vue social links (Twitter, GitHub, LinkedIn)
+[ ] Update index.html SEO meta tags
+[ ] Update README.md with your info
+
+
+Animation Details
+=================
+
+1. iPad Slide-in (IPadShowcase.vue):
+   - Uses Vue transition with Web Animations API
+   - translateX(-40px) → 0, opacity 0 → 1
+   - Duration: 800ms, cubic-bezier easing
+
+2. iPad Scroll Loop (IPadShowcase.vue):
+   - requestAnimationFrame-based state machine
+   - States: 'idle' (1000ms) ↔ 'scrolling' (100ms)
+   - Scrolls by 50% screen height each cycle
+   - Seamlessly loops back to top
+   - Cross-fades images during scroll
+
+3. Gallery Auto-swap (GalleryTile.vue):
+   - setInterval every 3000ms
+   - Cycles through 3 images
+   - Stops after 3 swaps
+   - CSS opacity transition (500ms)
+
+4. Status Ring (Navbar.vue):
+   - CSS keyframes animation
+   - Pulses scale + opacity
+   - 2s ease-in-out infinite
+   - Disabled if prefers-reduced-motion
+
+5. All Transitions:
+   - Respect prefers-reduced-motion media query
+   - Gracefully degrade to static first frame
+   - Keyboard-accessible
+   - ARIA-labeled
+
+
+Responsive Breakpoints
+======================
+
+Mobile (< 768px):
+  - Single column layouts
+  - Hamburger menu
+  - Stacked hero (text first, iPad below)
+  - Full-width CTA buttons
+  - Gallery: 1 column
+
+Tablet (768px - 1024px):
+  - 2-column grids
+  - Visible nav links
+  - Gallery: 2 columns
+
+Desktop (> 1024px):
+  - 3-column grids
+  - Full hero side-by-side
+  - Gallery: 3 columns
+  - Maximum container widths
+
+
+Performance Optimizations
+==========================
+
+✓ Vite for instant HMR and optimized builds
+✓ Tailwind JIT - only used classes in final CSS
+✓ No external animation libraries
+✓ Minimal JavaScript bundle
+✓ Semantic HTML for better parsing
+✓ Lazy-loadable components (if needed)
+✓ SVG placeholders (inline, no HTTP requests)
+✓ CSS animations over JavaScript where possible
+✓ requestAnimationFrame for smooth 60fps animations
+
+
+Accessibility Features
+======================
+
+✓ Semantic HTML5 elements
+✓ ARIA labels on all interactive elements
+✓ Keyboard navigation support
+✓ Focus indicators on all focusable elements
+✓ Alt text on all images
+✓ Color contrast meets WCAG AA
+✓ Prefers-reduced-motion support
+✓ Screen reader friendly
+✓ Skip links ready (can add if needed)
+✓ Form labels properly associated
+
+
+Build & Deploy
+==============
+
+Development:
+  npm install
+  npm run dev
+  → http://localhost:5173
+
+Production Build:
+  npm run build
+  → Creates `dist/` folder
+
+Preview Build:
+  npm run preview
+  → Preview production build locally
+
+Deploy to:
+  - Netlify (drag & drop `dist/`)
+  - Vercel (connect repo or CLI)
+  - GitHub Pages (copy `dist/` to gh-pages)
+  - Any static host
+
+No server required - fully static site!
+

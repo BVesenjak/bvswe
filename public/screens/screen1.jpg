@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#6366f1"/>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="white" text-anchor="middle">Dashboard</text>
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="40" fill="rgba(255,255,255,0.8)" text-anchor="middle">Screen 1</text>
+  <rect x="100" y="500" width="300" height="150" rx="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="450" y="500" width="300" height="150" rx="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="800" y="500" width="300" height="150" rx="10" fill="rgba(255,255,255,0.2)"/>
+</svg>
+

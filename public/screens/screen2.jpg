@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#8b5cf6"/>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="white" text-anchor="middle">Analytics</text>
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="40" fill="rgba(255,255,255,0.8)" text-anchor="middle">Screen 2</text>
+  <circle cx="300" cy="550" r="80" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="600" cy="550" r="80" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="900" cy="550" r="80" fill="rgba(255,255,255,0.2)"/>
+</svg>
+
