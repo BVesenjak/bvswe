@@ -23,7 +23,6 @@
             <div 
               ref="screenRef"
               class="screen-content absolute inset-0 bg-white"
-              :style="{ transform: `translateY(${scrollOffset}%)` }"
             >
               <div 
                 v-for="(image, index) in images" 
@@ -63,18 +62,16 @@ const props = defineProps({
   },
   scrollDurationMs: {
     type: Number,
-    default: 100
+    default: 500
   },
   scrollStepPercent: {
     type: Number,
-    default: 50
+    default: 100
   }
 })
 
 const screenRef = ref(null)
-const scrollOffset = ref(0)
 const activeImageIndex = ref(0)
-let animationId = null
 let timeoutId = null
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -93,7 +90,7 @@ const onEnter = (el, done) => {
   }
   
   const animation = el.animate([
-    { opacity: '0', transform: 'translateX(-40px)' },
+    { opacity: '1', transform: 'translateX(-40px)' },
     { opacity: '1', transform: 'translateX(0)' }
   ], {
     duration: 800,
@@ -108,52 +105,19 @@ const onEnter = (el, done) => {
 const startScrollAnimation = () => {
   if (prefersReducedMotion) return
 
-  let state = 'idle'
-  let stateStartTime = Date.now()
-  let scrollStartOffset = 0
-  let scrollTargetOffset = 0
-  const maxScroll = props.scrollStepPercent * 3 // Total of 4 images, scroll 3 times
+  let currentIndex = 0
 
-  const animate = () => {
-    const now = Date.now()
-    const elapsed = now - stateStartTime
+  const cycleImages = () => {
+    // Move to next image
+    currentIndex = (currentIndex + 1) % props.images.length
+    activeImageIndex.value = currentIndex
 
-    if (state === 'idle') {
-      if (elapsed >= props.scrollPauseMs) {
-        // Start scrolling
-        state = 'scrolling'
-        stateStartTime = now
-        scrollStartOffset = scrollOffset.value
-        scrollTargetOffset = scrollOffset.value + props.scrollStepPercent
-        
-        // Loop back to start
-        if (scrollTargetOffset >= maxScroll + props.scrollStepPercent) {
-          scrollTargetOffset = 0
-          scrollStartOffset = maxScroll
-          scrollOffset.value = maxScroll
-        }
-      }
-    } else if (state === 'scrolling') {
-      const progress = Math.min(elapsed / props.scrollDurationMs, 1)
-      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
-      
-      scrollOffset.value = scrollStartOffset + (scrollTargetOffset - scrollStartOffset) * eased
-
-      if (progress >= 1) {
-        // Scrolling complete, back to idle
-        state = 'idle'
-        stateStartTime = now
-        
-        // Update active image based on scroll position
-        const imageIndex = Math.round(scrollOffset.value / props.scrollStepPercent) % props.images.length
-        activeImageIndex.value = imageIndex
-      }
-    }
-
-    animationId = requestAnimationFrame(animate)
+    // Schedule next cycle
+    timeoutId = setTimeout(cycleImages, props.scrollPauseMs + props.scrollDurationMs)
   }
 
-  animationId = requestAnimationFrame(animate)
+  // Start the cycle
+  timeoutId = setTimeout(cycleImages, props.scrollPauseMs)
 }
 
 onMounted(() => {
@@ -164,9 +128,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (animationId) {
-    cancelAnimationFrame(animationId)
-  }
   if (timeoutId) {
     clearTimeout(timeoutId)
   }
